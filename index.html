@@ -376,7 +376,10 @@
   .gift-accounts.show .gift-acc:nth-child(2){ animation-delay:.12s; } .gift-accounts.show .gift-acc:nth-child(3){ animation-delay:.24s; }
   @keyframes giftIn{ from{ opacity:0; transform:scale(.6); } to{ opacity:1; transform:none; } }
   .gift-acc{ background:rgba(251,248,242,.1); border:1px solid rgba(251,248,242,.3); border-radius:var(--radius); padding:12px; font-size:.85rem; display:flex; justify-content:space-between; align-items:center; gap:10px; text-align:left; }
-  .gift-acc span{ min-width:0; word-break:break-word; }
+  .gift-acc > span{ min-width:0; word-break:break-word; display:flex; flex-direction:column; gap:1px; }
+  .gift-bank{ font-weight:600; letter-spacing:.06em; font-size:.78rem; }
+  .gift-no{ font-family:var(--serif); font-size:1.15rem; letter-spacing:.04em; font-variant-numeric:tabular-nums; }
+  .gift-name{ font-size:.75rem; opacity:.85; }
   .copy-btn{ background:transparent; border:1px solid var(--paper); color:var(--paper); font-family:var(--sans); font-size:.65rem; padding:6px 10px; border-radius:999px; cursor:pointer; flex-shrink:0; min-width:64px; }
   .copy-btn.done{ background:var(--paper); color:var(--olive); }
 
@@ -654,8 +657,8 @@
       <span>Kirim Hadiah</span>
     </button>
     <div class="gift-accounts" id="gift-accounts" hidden>
-      <div class="gift-acc"><span>BCA – a.n. [Nama]<br>[Nomor Rekening]</span><button type="button" class="copy-btn" data-copy="[Nomor Rekening]">Salin</button></div>
-      <div class="gift-acc"><span>[Bank Lain] – a.n. [Nama]<br>[Nomor Rekening]</span><button type="button" class="copy-btn" data-copy="[Nomor Rekening]">Salin</button></div>
+      <div class="gift-acc"><span><b class="gift-bank">BCA</b><span class="gift-no">0373848317</span><span class="gift-name">a.n. Gallang Purbowaseso</span></span><button type="button" class="copy-btn" data-copy="0373848317" aria-label="Salin nomor rekening BCA">Salin</button></div>
+      <div class="gift-acc"><span><b class="gift-bank">Mandiri</b><span class="gift-no">1370020248106</span><span class="gift-name">a.n. Gallang Purbowaseso</span></span><button type="button" class="copy-btn" data-copy="1370020248106" aria-label="Salin nomor rekening Mandiri">Salin</button></div>
     </div>
   </div>
 </section>
