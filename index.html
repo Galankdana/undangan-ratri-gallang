@@ -294,6 +294,7 @@
   .story-item{ display:flex; gap:16px; margin-bottom:28px; }
   .story-dot{ width:10px; height:10px; border-radius:50%; background:var(--terracotta); margin-top:6px; flex-shrink:0; }
   .story-year{ font-family:var(--serif); color:var(--burgundy); font-size:.95rem; margin-bottom:2px;}
+  .story-heading{ color:var(--ink) !important; font-size:clamp(2.2rem,9vw,2.8rem) !important; margin-bottom:6px; }
   .story-closing{ margin:10px auto 0; max-width:380px; text-align:center; font-family:var(--script); font-style:italic; font-size:1.3rem; line-height:1.5; color:var(--olive); }
   .story-text{ font-size:.88rem; color:var(--taupe); line-height:1.6; }
 
@@ -480,7 +481,7 @@
 <section id="hero">
   <div class="tanda-sudut" aria-hidden="true"></div>
   <div class="hero-slides" id="hero-slides" aria-hidden="true"></div>
-  <div class="eyebrow hero-anim" style="--d:.2s">The Wedding of</div>
+  <div class="eyebrow hero-anim" style="--d:.2s"><em>The Wedding of</em></div>
   <h1 class="hero-anim" style="--d:.4s">Ratri <span class="amp">&amp;</span> Gallang</h1>
   <div class="date hero-anim" style="--d:.6s">Minggu, 27 Desember 2026</div>
   <div id="countdown" class="hero-anim" style="--d:.8s" aria-label="Hitung mundur menuju hari pernikahan">
@@ -513,7 +514,7 @@
 <!-- ================= MEMPELAI ================= -->
 <section id="mempelai" class="section-orn cv">
   <div class="eyebrow reveal">Mempelai</div>
-  <div class="heading reveal">Dengan penuh syukur kepada Tuhan Yang Maha Esa, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami</div>
+  <div class="heading reveal">Dengan penuh syukur kepada Tuhan Yang Maha Esa, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami.</div>
   <div class="divider reveal"></div>
 
   <div class="couple-card reveal-left">
@@ -522,7 +523,7 @@
     </div>
     <div class="couple-name">Elizabeth Ratri Dian Jati</div>
     <div class="couple-sub">Ratri</div>
-    <div class="couple-parents">Putri dari<br>Bapak Antonius W. Topo Aji &amp; Ibu M.M. Lies Supriyantini</div>
+    <div class="couple-parents">Putri dari<br>Bapak Antonius W. Topo Aji dan Ibu M.M. Lies Supriyantini</div>
     <a class="couple-social" href="https://www.instagram.com/eratridianjati" target="_blank" rel="noopener" aria-label="Instagram Ratri (@eratridianjati)" title="@eratridianjati"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a>
   </div>
 
@@ -534,15 +535,14 @@
     </div>
     <div class="couple-name">Gallang Purbowaseso</div>
     <div class="couple-sub">Gallang</div>
-    <div class="couple-parents">Putra dari<br>Bapak Susamto Hadori &amp; Ibu Sri Marsiti</div>
+    <div class="couple-parents">Putra dari<br>Bapak Susamto Hadori dan Ibu Sri Marsiti</div>
     <a class="couple-social" href="https://www.instagram.com/galankdana" target="_blank" rel="noopener" aria-label="Instagram Gallang (@galankdana)" title="@galankdana"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a>
   </div>
 </section>
 
 <!-- ================= CERITA CINTA ================= -->
 <section id="cerita" class="section-orn cv">
-  <div class="eyebrow reveal">Kisah Kami</div>
-  <div class="heading reveal">Cerita Cinta</div>
+  <div class="heading story-heading reveal">Kisah Kami</div>
   <div class="divider reveal"></div>
   <div class="story-item reveal">
     <div class="story-dot"></div>
@@ -584,7 +584,7 @@
 
 <!-- ================= ACARA ================= -->
 <section id="acara" class="section-orn cv">
-  <div class="eyebrow reveal">Waktu &amp; Tempat</div>
+  <div class="eyebrow reveal">Waktu dan Tempat</div>
   <div class="heading reveal">Acara Pernikahan</div>
   <div class="divider reveal"></div>
 
@@ -596,7 +596,7 @@
     <div class="event-sub">Sakramen Perkawinan Katolik</div>
     <div class="event-row"><span class="ic">📅</span><span>Minggu, 27 Desember 2026</span></div>
     <div class="flip-line reveal-flip"></div>
-    <div class="event-row"><span class="ic">🕑</span><span>Pukul 12.00 WIB – selesai</span></div>
+    <div class="event-row"><span class="ic">🕑</span><span>Pukul 12.00 WIB sampai selesai</span></div>
     <div class="event-row"><span class="ic">📌</span><span>Gereja Katolik Salib Suci, Paroki Kamuning<br>Jl. Kemuning No. 25, Bandung 40113</span></div>
     <!-- Peta dimuat otomatis saat kartu mendekati layar -->
     <div class="map-frame" data-map="https://www.google.com/maps?q=-6.916163,107.628441&amp;z=17&amp;output=embed" data-title="Peta Gereja Katolik Salib Suci"></div>
@@ -611,7 +611,7 @@
     <div class="event-sub">Pesta Pernikahan</div>
     <div class="event-row"><span class="ic">📅</span><span>Minggu, 27 Desember 2026</span></div>
     <div class="flip-line reveal-flip"></div>
-    <div class="event-row"><span class="ic">🕑</span><span>Pukul 14.00 – 16.00 WIB</span></div>
+    <div class="event-row"><span class="ic">🕑</span><span>Pukul 14.00–16.00 WIB</span></div>
     <div class="event-row"><span class="ic">📌</span><span>Selaras Guest House &amp; Restaurant<br>Jl. Taman Cibeunying Selatan No. 45, Cihapit, Bandung Wetan, Bandung 40114</span></div>
     <div class="map-frame" data-map="https://www.google.com/maps?q=-6.904762,107.623743&amp;z=17&amp;output=embed" data-title="Peta Selaras Guest House &amp; Restaurant"></div>
     <a class="btn-map" href="https://www.google.com/maps/search/?api=1&amp;query=Selaras+Guest+House+%26+Restaurant+Bandung&amp;query_place_id=ChIJCyXzHLXnaC4RlAG3MDL5oFE" target="_blank" rel="noopener">Lihat Lokasi</a>
@@ -621,16 +621,16 @@
 <!-- ================= DRESSCODE ================= -->
 <section id="dresscode" class="cv">
   <div class="event-card dress-card reveal-zoom">
-    <div class="dress-title">Dresscode</div>
+    <div class="dress-title"><em>Dresscode</em></div>
     <div class="event-sub">Nuansa Warna Busana</div>
     <p class="dress-text">Kami akan sangat senang apabila Bapak/Ibu/Saudara/i berkenan mengenakan busana bernuansa warna berikut.</p>
     <div class="flip-line reveal-flip"></div>
     <div class="swatches">
-      <div class="swatch reveal-zoom" style="transition-delay:.15s"><span style="background:#D7C9AF"></span>Cream</div>
-      <div class="swatch reveal-zoom" style="transition-delay:.3s"><span style="background:#A7B59B"></span>Sage</div>
-      <div class="swatch reveal-zoom" style="transition-delay:.45s"><span style="background:#C57A53"></span>Terracotta</div>
-      <div class="swatch reveal-zoom" style="transition-delay:.6s"><span style="background:#4D5F47"></span>Olive</div>
-      <div class="swatch reveal-zoom" style="transition-delay:.75s"><span style="background:#6B584A"></span>Taupe</div>
+      <div class="swatch reveal-zoom" style="transition-delay:.15s"><span style="background:#D7C9AF"></span><em>Cream</em></div>
+      <div class="swatch reveal-zoom" style="transition-delay:.3s"><span style="background:#A7B59B"></span><em>Sage</em></div>
+      <div class="swatch reveal-zoom" style="transition-delay:.45s"><span style="background:#C57A53"></span><em>Terracotta</em></div>
+      <div class="swatch reveal-zoom" style="transition-delay:.6s"><span style="background:#4D5F47"></span><em>Olive</em></div>
+      <div class="swatch reveal-zoom" style="transition-delay:.75s"><span style="background:#6B584A"></span><em>Taupe</em></div>
     </div>
     <p class="dress-note">Mohon menghindari busana berwarna putih.</p>
   </div>
@@ -663,7 +663,7 @@
 <section id="rsvp" class="section-orn cv">
   <div class="eyebrow reveal">Konfirmasi Kehadiran</div>
   <div class="rsvp-title reveal">Ucapkan Sesuatu</div>
-  <div class="event-sub reveal">Berikan Ucapan &amp; Doa Restu</div>
+  <div class="event-sub reveal">Berikan Ucapan dan Doa Restu</div>
   <div class="divider reveal"></div>
 
   <div class="rsvp-stats reveal">
@@ -677,7 +677,7 @@
       <label class="checked"><input type="radio" name="kehadiran" value="Hadir" checked><span>✓ Hadir</span></label>
       <label><input type="radio" name="kehadiran" value="Tidak hadir"><span>✗ Tidak Hadir</span></label>
     </div>
-    <textarea id="rsvp-ucapan" maxlength="500" placeholder="Tulis ucapan dan doa restu untuk Ratri &amp; Gallang..." aria-label="Ucapan dan doa restu"></textarea>
+    <textarea id="rsvp-ucapan" maxlength="500" placeholder="Tulis ucapan dan doa restu untuk Ratri dan Gallang…" aria-label="Ucapan dan doa restu"></textarea>
     <button type="submit" class="btn-submit" id="btn-submit">Kirim</button>
     <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
   </form>
@@ -720,7 +720,7 @@
   </div>
   <div class="foot-sign reveal">Kami yang berbahagia,</div>
   <div class="foot-names reveal">Ratri &amp; Gallang</div>
-  <small>Undangan digital ini dibuat dengan penuh cinta oleh <span class="nowrap">Ratri &amp; Gallang</span>.</small>
+  <small>Undangan digital ini dibuat dengan penuh cinta oleh <span class="nowrap">Ratri dan Gallang</span>.</small>
 </footer>
 
 <!-- Tombol musik -->
