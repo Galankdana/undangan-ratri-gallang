@@ -211,6 +211,7 @@
       var(--bg, none) center 55%/cover no-repeat,
       var(--olive);
   }
+  #ayat .sprig{ display:block; margin:0 auto 18px; position:relative; filter:drop-shadow(0 2px 6px rgba(0,0,0,.2)); }
   #ayat blockquote{ font-family:var(--script); font-style:italic; font-size:1.35rem; line-height:1.6; max-width:440px; margin:0 auto; }
   #ayat cite{ display:block; margin-top:16px; font-family:var(--sans); font-style:normal; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; }
 
@@ -410,8 +411,19 @@
 
 <!-- ================= AYAT ================= -->
 <section id="ayat" class="reveal" data-bg="aset/foto/ayat.webp">
+  <!-- Ornamen ranting daun (gambar orisinal, warna dari palet undangan) -->
+  <svg class="sprig" viewBox="0 0 120 64" width="96" height="51" aria-hidden="true">
+    <path d="M14 52 C 40 46, 62 34, 106 12" fill="none" stroke="#D7C9AF" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M30 47 C 22 36, 24 28, 31 22 C 36 31, 36 40, 30 47 Z" fill="#A7B59B"/>
+    <path d="M32 47 C 42 52, 50 56, 58 54 C 52 46, 42 44, 32 47 Z" fill="#C57A53" opacity=".9"/>
+    <path d="M52 38 C 46 27, 50 18, 58 13 C 62 23, 60 32, 52 38 Z" fill="#A7B59B"/>
+    <path d="M54 38 C 64 42, 73 44, 80 40 C 74 33, 63 33, 54 38 Z" fill="#A7B59B" opacity=".85"/>
+    <path d="M74 27 C 70 18, 74 10, 82 6 C 85 15, 82 23, 74 27 Z" fill="#C57A53" opacity=".9"/>
+    <path d="M76 27 C 85 29, 93 29, 98 24 C 92 19, 83 21, 76 27 Z" fill="#A7B59B"/>
+    <circle cx="107" cy="11" r="2.6" fill="#C57A53"/><circle cx="101" cy="7" r="1.8" fill="#D7C9AF"/><circle cx="111" cy="17" r="1.6" fill="#D7C9AF"/>
+  </svg>
   <blockquote>
-    &ldquo;Sebab itu seorang laki-laki akan meninggalkan ayah dan ibunya lalu bersatu dengan isterinya, sehingga keduanya menjadi satu daging.&rdquo;
+    &ldquo;Sebab itu seorang laki-laki akan meninggalkan ayahnya dan ibunya dan bersatu dengan isterinya, sehingga keduanya menjadi satu daging.&rdquo;
     <cite>Kejadian 2:24</cite>
   </blockquote>
 </section>
