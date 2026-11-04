@@ -312,9 +312,14 @@
   .swatch span{ display:block; width:42px; height:42px; border-radius:50%; margin:0 auto 6px; border:1px solid rgba(0,0,0,.08); }
 
   /* RSVP */
-  .rsvp-stats{ display:flex; justify-content:center; gap:30px; margin-bottom:28px; }
-  .rsvp-stat{ text-align:center; }
-  .rsvp-stat .n{ font-family:var(--serif); font-size:1.8rem; color:var(--burgundy); display:block; font-variant-numeric:tabular-nums; min-height:1.2em; }
+  .rsvp-title{ font-family:var(--script); font-style:italic; font-size:clamp(2.6rem,12vw,3.4rem); line-height:1.05; color:var(--olive); text-align:center; margin:4px 0 6px; }
+  /* Kotak angka berwarna: sage muda = Hadir, terakota muda = Tidak Hadir */
+  .rsvp-stats{ display:flex; justify-content:center; gap:12px; margin:8px 0 28px; }
+  .rsvp-stat{ text-align:center; min-width:112px; padding:14px 16px 12px; border-radius:var(--radius); border:1px solid; }
+  .rsvp-stat.yes{ background:#E6EBDF; border-color:#C7D1BC; }
+  .rsvp-stat.no{ background:#F5E3D8; border-color:#E8C3AE; }
+  .rsvp-stat .n{ font-family:var(--serif); font-size:1.8rem; font-weight:700; display:block; font-variant-numeric:tabular-nums; min-height:1.2em; line-height:1.2; }
+  .rsvp-stat.yes .n{ color:var(--olive); } .rsvp-stat.no .n{ color:#A2532F; }
   .rsvp-stat .l{ font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--taupe); }
   form#rsvp-form{ display:flex; flex-direction:column; gap:12px; }
   input, textarea, select{
@@ -343,8 +348,15 @@
   .wish-item{ border-bottom:1px solid var(--sage); padding-bottom:12px; transition:opacity .3s; }
   .wish-item.pending{ opacity:.6; }
   .wish-name{ font-weight:600; font-size:.85rem; color:var(--olive); word-break:break-word; }
-  .wish-status{ font-size:.65rem; color:var(--terracotta); text-transform:uppercase; letter-spacing:.06em; margin-left:6px;}
+  .wish-head{ display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; }
+  .wish-status{ font-size:.65rem; color:var(--terracotta); text-transform:uppercase; letter-spacing:.06em; }
   .wish-item.failed .wish-status.state{ color:var(--err); }
+  /* Label kehadiran berwarna */
+  .wish-chip{ display:inline-flex; align-items:center; gap:5px; font-size:.66rem; font-weight:500; padding:2px 9px; border-radius:999px; }
+  .wish-chip::before{ content:""; width:6px; height:6px; border-radius:50%; background:currentColor; }
+  .wish-chip.yes{ background:#E6EBDF; color:var(--olive); }
+  .wish-chip.no{ background:#F5E3D8; color:#A2532F; }
+  .wish-time{ display:block; font-size:.68rem; color:var(--dusty); margin-top:2px; font-variant-numeric:tabular-nums; }
   .wish-text{ font-size:.83rem; color:var(--taupe); margin-top:2px; white-space:pre-line; word-break:break-word; }
   .wish-empty{ font-size:.83rem; color:var(--taupe); text-align:center; }
   .skeleton{ height:46px; border-radius:8px; flex-shrink:0; background:linear-gradient(90deg,var(--cream-soft),var(--paper),var(--cream-soft)); background-size:200% 100%; animation:sh 1.2s infinite; }
@@ -595,12 +607,13 @@
 <!-- ================= RSVP & UCAPAN ================= -->
 <section id="rsvp" class="section-orn cv">
   <div class="eyebrow reveal">Konfirmasi Kehadiran</div>
-  <div class="heading reveal">RSVP &amp; Ucapan</div>
+  <div class="rsvp-title reveal">Ucapkan Sesuatu</div>
+  <div class="event-sub reveal">Berikan Ucapan &amp; Doa Restu</div>
   <div class="divider reveal"></div>
 
   <div class="rsvp-stats reveal">
-    <div class="rsvp-stat"><span class="n" id="stat-hadir">–</span><span class="l">Hadir</span></div>
-    <div class="rsvp-stat"><span class="n" id="stat-tidak">–</span><span class="l">Tidak Hadir</span></div>
+    <div class="rsvp-stat yes"><span class="n" id="stat-hadir">–</span><span class="l">Hadir</span></div>
+    <div class="rsvp-stat no"><span class="n" id="stat-tidak">–</span><span class="l">Tidak Hadir</span></div>
   </div>
 
   <form id="rsvp-form" class="reveal" novalidate>
@@ -835,6 +848,16 @@
   var sending = false, loadedOnce = false;
 
   function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  // Tanggal dan jam kirim dalam WIB, contoh: 27-12-2026 13.05
+  function fmtTime(iso){
+    if (!iso) return '';
+    var d = new Date(iso); if (isNaN(d)) return '';
+    try{
+      var p = {}; new Intl.DateTimeFormat('id-ID', { timeZone:'Asia/Jakarta', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:false })
+        .formatToParts(d).forEach(function(x){ p[x.type] = x.value; });
+      return p.day + '-' + p.month + '-' + p.year + ' ' + p.hour + '.' + p.minute;
+    }catch(e){ return ''; }
+  }
   function isHadir(v){ return !/tidak/i.test(String(v || '')); }
   function newId(){
     if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
@@ -854,10 +877,13 @@
     }
     wishes.forEach(function(w){
       var d = el('div', 'wish-item' + (w.status ? ' ' + w.status : ''));
-      d.appendChild(el('span', 'wish-name', w.nama));
-      d.appendChild(el('span', 'wish-status', isHadir(w.hadir) ? 'Hadir' : 'Tidak Hadir'));
-      if (w.status === 'pending') d.appendChild(el('span', 'wish-status state', '· Mengirim…'));
-      if (w.status === 'failed')  d.appendChild(el('span', 'wish-status state', '· Belum terkirim'));
+      var head = el('div', 'wish-head');
+      head.appendChild(el('span', 'wish-name', w.nama));
+      head.appendChild(el('span', 'wish-chip ' + (isHadir(w.hadir) ? 'yes' : 'no'), isHadir(w.hadir) ? 'Hadir' : 'Tidak Hadir'));
+      if (w.status === 'pending') head.appendChild(el('span', 'wish-status state', 'Mengirim…'));
+      if (w.status === 'failed')  head.appendChild(el('span', 'wish-status state', 'Belum terkirim'));
+      d.appendChild(head);
+      var t = fmtTime(w.waktu); if (t && !w.status) d.appendChild(el('span', 'wish-time', t));
       d.appendChild(el('div', 'wish-text', w.ucapan || ''));
       list.appendChild(d);
     });
@@ -933,6 +959,7 @@
     .then(function(d){
       if (!d || !d.ok) throw new Error((d && d.error) || 'Gagal');
       if (d.item){ for (var k in d.item) item[k] = d.item[k]; }
+      if (!item.waktu) item.waktu = new Date().toISOString();
       item.status = '';
       if (stats && !d.duplicate){ if (isHadir(hadir)) stats.hadir++; else stats.tidak++; }
       sentSigs.push(sig); store.set('rg_sent', sentSigs.slice(-20));
