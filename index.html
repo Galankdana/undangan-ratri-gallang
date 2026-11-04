@@ -393,16 +393,24 @@
   #music-toggle .disc{ display:inline-block; animation: spin 4s linear infinite; animation-play-state: paused; }
   #music-toggle.playing .disc{ animation-play-state: running; }
 
+  /* Penutup berlatar olive gelap */
   footer{
-    position:relative; z-index:2; text-align:center; padding:70px 24px 90px; color:var(--paper);
-    background:
-      linear-gradient(180deg, rgba(215,201,175,.88), rgba(197,122,83,.55)),
-      var(--bg, none) center 30%/cover no-repeat,
-      var(--cream);
+    position:relative; z-index:2; text-align:center; padding:64px 0 96px; color:var(--cream-soft); overflow:hidden;
+    background:linear-gradient(180deg, #44553F 0%, var(--olive) 40%, #3A4935 100%);
   }
-  footer .eyebrow{ color:var(--olive); }
-  footer .foot-names{ font-family:var(--script); font-style:italic; font-size:1.6rem; color:var(--olive); margin-bottom:6px;}
-  footer small{ display:block; margin-top:30px; font-size:.68rem; color:var(--ink); opacity:.8; }
+  footer > *:not(.foot-carousel){ margin-left:24px; margin-right:24px; }
+  .foot-line{ width:1px; height:56px; margin:0 auto 22px !important; background:linear-gradient(180deg, transparent, var(--cream)); }
+  .foot-title{ font-family:var(--serif); font-size:clamp(1.7rem,7vw,2.1rem); color:var(--paper); margin-bottom:14px !important; }
+  .foot-text{ font-size:.86rem; line-height:1.75; max-width:448px; margin:0 auto !important; padding:0 24px; color:var(--cream); }
+  .foot-carousel{ margin:34px 0 30px; overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+  .foot-track{ display:flex; gap:12px; width:max-content; animation:marquee 36s linear infinite; }
+  .foot-carousel:hover .foot-track{ animation-play-state:paused; }
+  .foot-track img{ width:150px; height:210px; object-fit:cover; border-radius:18px; display:block; box-shadow:0 10px 24px rgba(0,0,0,.25); }
+  @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(calc(-50% - 6px)); } }
+  .foot-sign{ font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--cream); }
+  footer .foot-names{ font-family:var(--script); font-style:italic; font-size:clamp(2.2rem,10vw,2.8rem); color:var(--paper); margin-top:8px !important; }
+  footer small{ display:block; margin-top:40px !important; font-size:.68rem; color:var(--cream); opacity:.75; }
 
   @keyframes spin{ from{transform:rotate(0)} to{transform:rotate(360deg)} }
 
@@ -416,7 +424,8 @@
     .gate-anim{ animation:none; opacity:1; }
     .js #hero .hero-anim{ opacity:1; animation:none !important; }
     .hero-slide, .hero-slide.on{ transform:none !important; transition:opacity 1s ease; } .hero-slide.solo{ animation:none; }
-    #music-toggle .disc, .spin, .skeleton{ animation:none; }
+    #music-toggle .disc, .spin, .skeleton, .foot-track{ animation:none; }
+    .foot-carousel{ overflow-x:auto; }
   }
 </style>
 </head>
@@ -664,12 +673,18 @@
 </section>
 
 <!-- ================= PENUTUP ================= -->
-<footer data-bg="aset/foto/penutup.webp">
-  <div class="eyebrow reveal">Terima Kasih</div>
-  <div class="foot-names reveal">Ratri &amp; Gallang</div>
-  <p class="reveal" style="font-size:.85rem; max-width:380px; margin:0 auto; line-height:1.7; color:var(--ink); font-weight:500;">
-    Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+<footer>
+  <div class="foot-line reveal"></div>
+  <div class="foot-title reveal">Terima Kasih</div>
+  <p class="foot-text reveal">
+    Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. Atas kehadiran dan doa restunya, kami mengucapkan terima kasih.
   </p>
+  <!-- Carousel foto yang bergeser terus (daftar foto diulang dua kali agar gerakannya tanpa putus) -->
+  <div class="foot-carousel reveal" aria-hidden="true">
+    <div class="foot-track"><img src="aset/foto/penutup/01.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/02.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/03.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/04.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/05.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/06.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/01.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/02.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/03.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/04.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/05.webp" alt="" width="300" height="420" loading="lazy" decoding="async"><img src="aset/foto/penutup/06.webp" alt="" width="300" height="420" loading="lazy" decoding="async"></div>
+  </div>
+  <div class="foot-sign reveal">Kami yang berbahagia,</div>
+  <div class="foot-names reveal">Ratri &amp; Gallang</div>
   <small>Undangan digital ini dibuat dengan penuh cinta oleh Ratri &amp; Gallang.</small>
 </footer>
 
