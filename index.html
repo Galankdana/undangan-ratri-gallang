@@ -365,7 +365,16 @@
   /* Amplop digital */
   .gift-card{ background:var(--olive); color:var(--paper); border-radius:var(--radius); padding:28px 24px; text-align:center; }
   .gift-card p{ font-size:.85rem; line-height:1.6; margin-bottom:20px; opacity:.92;}
-  .gift-accounts{ display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+  .gift-toggle{ display:inline-flex; align-items:center; gap:8px; padding:11px 26px; border-radius:999px; border:1px solid var(--paper);
+    background:transparent; color:var(--paper); font-family:var(--sans); font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; cursor:pointer;
+    transition:background .2s, color .2s, transform .1s; }
+  .gift-toggle:hover, .gift-toggle[aria-expanded="true"]{ background:var(--paper); color:var(--olive); }
+  .gift-toggle:active{ transform:scale(.97); }
+  .gift-accounts{ display:flex; flex-direction:column; gap:10px; margin-top:20px; }
+  /* Rekening muncul membesar satu per satu setelah tombol diketuk */
+  .gift-accounts.show .gift-acc{ animation:giftIn .5s cubic-bezier(.22,.68,.32,1) both; }
+  .gift-accounts.show .gift-acc:nth-child(2){ animation-delay:.12s; } .gift-accounts.show .gift-acc:nth-child(3){ animation-delay:.24s; }
+  @keyframes giftIn{ from{ opacity:0; transform:scale(.6); } to{ opacity:1; transform:none; } }
   .gift-acc{ background:rgba(251,248,242,.1); border:1px solid rgba(251,248,242,.3); border-radius:var(--radius); padding:12px; font-size:.85rem; display:flex; justify-content:space-between; align-items:center; gap:10px; text-align:left; }
   .gift-acc span{ min-width:0; word-break:break-word; }
   .copy-btn{ background:transparent; border:1px solid var(--paper); color:var(--paper); font-family:var(--sans); font-size:.65rem; padding:6px 10px; border-radius:999px; cursor:pointer; flex-shrink:0; min-width:64px; }
@@ -640,7 +649,11 @@
   <div class="divider reveal"></div>
   <div class="gift-card reveal">
     <p>Doa restu Bapak/Ibu/Saudara/i adalah karunia yang sangat berarti bagi kami. Jika ingin memberikan tanda kasih, kami menyediakan opsi nontunai berikut.</p>
-    <div class="gift-accounts">
+    <button type="button" class="gift-toggle" id="gift-toggle" aria-expanded="false" aria-controls="gift-accounts">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1s3.5 1 5 1zm0 0c1.5-3 5-3.5 5-1s-3.5 1-5 1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <span>Kirim Hadiah</span>
+    </button>
+    <div class="gift-accounts" id="gift-accounts" hidden>
       <div class="gift-acc"><span>BCA – a.n. [Nama]<br>[Nomor Rekening]</span><button type="button" class="copy-btn" data-copy="[Nomor Rekening]">Salin</button></div>
       <div class="gift-acc"><span>[Bank Lain] – a.n. [Nama]<br>[Nomor Rekening]</span><button type="button" class="copy-btn" data-copy="[Nomor Rekening]">Salin</button></div>
     </div>
@@ -816,6 +829,15 @@
     if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; sx = null;
     if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
   }, { passive:true });
+
+  /* ============ KIRIM HADIAH: buka-tutup daftar rekening ============ */
+  var gToggle = $('gift-toggle'), gList = $('gift-accounts');
+  if (gToggle) gToggle.addEventListener('click', function(){
+    var open = gList.hidden;
+    gList.hidden = !open; gList.classList.toggle('show', open);
+    gToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    gToggle.querySelector('span').textContent = open ? 'Tutup' : 'Kirim Hadiah';
+  });
 
   /* ============ SALIN NOMOR REKENING ============ */
   document.querySelectorAll('.copy-btn').forEach(function(btn){
