@@ -8,7 +8,9 @@
 <meta name="theme-color" content="#4D5F47">
 <meta property="og:title" content="Undangan Pernikahan Ratri &amp; Gallang">
 <meta property="og:description" content="Minggu, 27 Desember 2026 · Bandung">
-<meta property="og:image" content="https://ratridangallang.party/aset/foto/hero.webp">
+<meta property="og:image" content="https://ratridangallang.party/aset/foto/pratinjau-tautan.jpg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
 
 <!-- Koneksi awal ke server yang pasti dipakai -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +20,7 @@
 
 <!-- Foto pembuka diunduh sejak awal, jadi sudah siap saat sampul dibuka -->
 <link rel="preload" as="image" href="aset/foto/sampul.webp" fetchpriority="high">
-<link rel="preload" as="image" href="aset/foto/hero.webp">
+<link rel="preload" as="image" href="aset/foto/pembuka-1.webp">
 
 <!-- Fon dimuat tanpa menahan tampilan -->
 <link rel="preload" as="style"
@@ -34,7 +36,11 @@
     ENDPOINT: 'https://script.google.com/macros/s/AKfycbzL36JFn8knKgJnV4Yzut8YASnwAjqVYHuq7xdkDNNDIJMDLFm9f0iayllZPOr9yQJd/exec',
     MUSIC: 'aset/musik/latar.mp3',
     // Foto slideshow halaman pembuka (urut). Satu foto saja = efek Ken Burns tanpa pergantian.
-    HERO_SLIDES: ['aset/foto/hero.webp'],
+    // "fokus" = titik pusat saat foto membesar; pilih titik dekat wajah agar wajah tidak tertutup teks.
+    HERO_SLIDES: [
+      { src:'aset/foto/pembuka-1.webp', fokus:'50% 35%' },
+      { src:'aset/foto/pembuka-2.webp', fokus:'50% 100%', naik:16 }   // naik = geser foto ke atas (% tinggi) agar wajah di atas teks
+    ],
     HERO_INTERVAL: 6000,
     VOLUME: 0.3
   };
@@ -178,7 +184,7 @@
   .hero-slide{ position:absolute; inset:0; background-position:center 22%; background-size:cover; background-repeat:no-repeat;
     opacity:0; transform:scale(1); will-change:opacity, transform;
     transition: opacity 3s ease, transform 0s linear 3s; }
-  .hero-slide.on{ opacity:1; transform:scale(1.3); transition: opacity 3s ease, transform 20s linear; }
+  .hero-slide.on{ opacity:1; transform:scale(1.22); transition: opacity 3s ease, transform 20s linear; }
   .hero-slide.solo{ opacity:1; animation:kenburns 20s ease-in-out infinite alternate; }
   @keyframes kenburns{ from{ transform:scale(1); } to{ transform:scale(1.18); } }
 
@@ -634,8 +640,12 @@
   });
 
   /* ============ SLIDESHOW PEMBUKA + KEN BURNS ============ */
-  var slideBox = $('hero-slides'), slides = (C.HERO_SLIDES || []).map(function(src){
-    var d = document.createElement('div'); d.className = 'hero-slide'; d.dataset.src = src; slideBox.appendChild(d); return d;
+  var slideBox = $('hero-slides'), slides = (C.HERO_SLIDES || []).map(function(s){
+    if (typeof s === 'string') s = { src:s };
+    var d = document.createElement('div'); d.className = 'hero-slide'; d.dataset.src = s.src;
+    if (s.fokus) d.style.transformOrigin = s.fokus;
+    if (s.naik){ d.style.backgroundSize = 'auto ' + (100 + s.naik) + '%'; d.style.backgroundPosition = '50% 100%'; }
+    slideBox.appendChild(d); return d;
   });
   function showSlide(d){ if (!d.style.backgroundImage) d.style.backgroundImage = 'url("' + d.dataset.src + '")'; }
   if (slides[0]){ showSlide(slides[0]); slides[0].style.opacity = slides.length > 1 ? '' : '1'; slides[0].classList.add(slides.length > 1 ? 'on' : 'solo'); slides[0].style.transform = slides.length > 1 ? 'scale(1)' : ''; }
