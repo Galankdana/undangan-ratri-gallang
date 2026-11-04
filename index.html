@@ -87,23 +87,37 @@
   /* ============ GERBANG / SAMPUL ============ */
   #gate{
     position:fixed; inset:0; z-index:999;
-    background: linear-gradient(180deg, var(--olive) 0%, var(--taupe) 55%, var(--terracotta) 100%);
-    display:flex; align-items:center; justify-content:center;
+    /* Foto sampul (diisi lewat --cover) digelapkan di atas dan bawah agar teks terbaca; tanpa foto, tampil gradasi */
+    background:
+      linear-gradient(180deg, rgba(38,33,26,.62) 0%, rgba(38,33,26,.18) 38%, rgba(38,33,26,.22) 58%, rgba(38,33,26,.78) 100%),
+      var(--cover, none) center 30%/cover no-repeat,
+      linear-gradient(180deg, var(--olive) 0%, var(--taupe) 55%, var(--terracotta) 100%);
+    display:flex; align-items:stretch; justify-content:center;
     text-align:center; color:var(--cream-soft);
-    transition: transform .95s cubic-bezier(.65,0,.35,1), opacity .8s ease;
+    transition: transform 1.5s ease-in-out, opacity 1.5s ease-in-out;
     will-change: transform, opacity;
   }
   #gate.opened{ transform: translateY(-100%); opacity:0; pointer-events:none; }
   #gate::before{
     content:""; position:absolute; inset:14px; border:1px solid rgba(239,233,221,.45); pointer-events:none;
   }
-  .gate-inner{ padding:32px; max-width:420px; }
+  /* Susunan atas–bawah: nama mempelai di sepertiga atas, tamu dan tombol di sepertiga bawah */
+  .gate-inner{
+    width:100%; max-width:420px; display:flex; flex-direction:column; justify-content:space-between; align-items:center;
+    padding: calc(15vh + env(safe-area-inset-top,0px)) 32px calc(11vh + env(safe-area-inset-bottom,0px));
+    padding: calc(15svh + env(safe-area-inset-top,0px)) 32px calc(11svh + env(safe-area-inset-bottom,0px));
+  }
+  .gate-top, .gate-bottom{ display:flex; flex-direction:column; align-items:center; }
   .gate-kicker{ font-family:var(--script); font-style:italic; font-size:1.1rem; letter-spacing:.08em; opacity:.9; }
-  .gate-names{ font-family:var(--serif); font-size:clamp(2.2rem,8vw,3.2rem); margin:14px 0 6px; line-height:1.15; }
-  .gate-to{ font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; opacity:.85; margin-top:18px;}
-  .gate-guest{ font-family:var(--script); font-size:1.5rem; margin-top:6px; word-break:break-word; }
+  .gate-names{ font-family:var(--serif); font-size:clamp(2.2rem,8vw,3.2rem); margin:10px 0 0; line-height:1.15; text-shadow:0 2px 18px rgba(0,0,0,.25); }
+  .gate-to{ font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; opacity:.9; }
+  .gate-guest{ font-family:var(--script); font-size:1.5rem; margin-top:6px; word-break:break-word; text-shadow:0 2px 14px rgba(0,0,0,.25); }
+
+  /* Teks sampul muncul bertahap: membesar dari titik di bawahnya, jeda 0,2 detik per baris */
+  .gate-anim{ opacity:0; transform-origin:center bottom; animation:zoomDown 1.2s cubic-bezier(.22,.68,.32,1) forwards; animation-delay:var(--d,0s); }
+  @keyframes zoomDown{ from{ opacity:0; transform:scale(.01); } to{ opacity:1; transform:none; } }
   .btn-open{
-    margin-top:34px; padding:14px 40px; background:transparent;
+    margin-top:26px; padding:14px 40px; background:transparent;
     border:1px solid var(--cream-soft); color:var(--cream-soft);
     font-family:var(--sans); letter-spacing:.12em; font-size:.8rem; text-transform:uppercase;
     cursor:pointer; border-radius: 999px; transition: background .3s, color .3s, transform .1s;
@@ -321,6 +335,7 @@
     html{ scroll-behavior:auto; }
     .js .reveal, .js .reveal-left, .js .reveal-right, .js .reveal-zoom{ opacity:1; transform:none; transition:none; }
     #gate{ transition:opacity .3s; } #gate.opened{ transform:none; }
+    .gate-anim{ animation:none; opacity:1; }
     #music-toggle .disc, .spin, .skeleton{ animation:none; }
   }
 </style>
@@ -330,10 +345,13 @@
 <!-- ================= GERBANG / SAMPUL ================= -->
 <div id="gate" role="dialog" aria-label="Sampul undangan">
   <div class="gate-inner">
-    <div class="gate-kicker">Undangan Pernikahan</div>
-    <div class="gate-names">Ratri &amp; Gallang</div>
-    <div class="gate-to">Kepada Bapak/Ibu/Saudara/i</div>
-    <div class="gate-guest" id="guest-name" hidden></div>
+   <div class="gate-top">
+    <div class="gate-kicker gate-anim" style="--d:.2s">Undangan Pernikahan</div>
+    <div class="gate-names gate-anim" style="--d:.4s">Ratri &amp; Gallang</div>
+   </div>
+   <div class="gate-bottom">
+    <div class="gate-to gate-anim" style="--d:.6s">Kepada Bapak/Ibu/Saudara/i</div>
+    <div class="gate-guest gate-anim" style="--d:.8s" id="guest-name" hidden></div>
     <!-- Nama tamu diisi seketika, sebelum fon, foto, dan peta dimuat -->
     <script>
       (function(){
@@ -346,7 +364,8 @@
         }catch(e){}
       })();
     </script>
-    <button class="btn-open" id="btn-open" type="button">Buka Undangan</button>
+    <button class="btn-open gate-anim" style="--d:1s" id="btn-open" type="button">Buka Undangan</button>
+   </div>
   </div>
 </div>
 
@@ -579,6 +598,8 @@
     prepped = true; audio.preload = 'auto'; audio.src = C.MUSIC; audio.volume = C.VOLUME || 0.3; audio.load();
   }
   ['pointerdown','touchstart'].forEach(function(t){ gate.addEventListener(t, prepMusic, { passive:true, once:true }); });
+  // Setelah animasi masuk selesai, lepaskan kelasnya agar efek tekan tombol tetap berfungsi
+  gate.addEventListener('animationend', function(e){ e.target.classList.remove('gate-anim'); });
   openBtn.addEventListener('pointerdown', function(){ openBtn.classList.add('pressed'); }, { passive:true });
   openBtn.addEventListener('click', function(){
     if (opened) return; opened = true;
