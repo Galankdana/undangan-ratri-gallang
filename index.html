@@ -256,9 +256,10 @@
     position:relative; border-top:2px solid var(--terracotta);
   }
   /* Foto di atas kartu, dengan judul acara besar menumpuk di bagian bawah foto */
-  .event-photo{ position:relative; margin:-28px -24px 16px; aspect-ratio:4/5; max-height:440px; overflow:hidden;
+  /* Lebar dikunci penuh selebar kartu; tinggi mengikuti rasio 4:5 dan dibatasi agar tidak terlalu tinggi di layar lebar */
+  .event-photo{ position:relative; width:calc(100% + 48px); margin:-28px -24px 16px; aspect-ratio:4/5; max-height:440px; overflow:hidden;
     border-radius:calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0; background:var(--sage); }
-  .event-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .event-photo img{ width:100%; height:100%; object-fit:cover; object-position:center 15%; display:block; }
   .event-photo::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 55%, rgba(20,20,20,.7) 100%); }
   .event-title{ position:absolute; left:0; right:0; bottom:14px; z-index:1; font-family:var(--script); font-style:italic;
     font-size:clamp(2.6rem,12vw,3.4rem); line-height:1; color:var(--paper); text-align:center; text-shadow:0 2px 14px rgba(0,0,0,.35); }
