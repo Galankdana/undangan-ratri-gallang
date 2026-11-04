@@ -17,7 +17,8 @@
 <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 
 <!-- Foto pembuka diunduh sejak awal, jadi sudah siap saat sampul dibuka -->
-<link rel="preload" as="image" href="aset/foto/hero.webp" fetchpriority="high">
+<link rel="preload" as="image" href="aset/foto/sampul.webp" fetchpriority="high">
+<link rel="preload" as="image" href="aset/foto/hero.webp">
 
 <!-- Fon dimuat tanpa menahan tampilan -->
 <link rel="preload" as="style"
@@ -89,8 +90,8 @@
     position:fixed; inset:0; z-index:999;
     /* Foto sampul (diisi lewat --cover) digelapkan di atas dan bawah agar teks terbaca; tanpa foto, tampil gradasi */
     background:
-      linear-gradient(180deg, rgba(38,33,26,.62) 0%, rgba(38,33,26,.18) 38%, rgba(38,33,26,.22) 58%, rgba(38,33,26,.78) 100%),
-      var(--cover, none) center 30%/cover no-repeat,
+      linear-gradient(180deg, rgba(52,62,46,.82) 0%, rgba(52,62,46,.45) 24%, rgba(52,62,46,.08) 42%, rgba(38,33,26,.10) 62%, rgba(38,33,26,.80) 100%),
+      url("aset/foto/sampul.webp") center 40%/cover no-repeat,
       linear-gradient(180deg, var(--olive) 0%, var(--taupe) 55%, var(--terracotta) 100%);
     display:flex; align-items:stretch; justify-content:center;
     text-align:center; color:var(--cream-soft);
