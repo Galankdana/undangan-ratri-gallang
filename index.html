@@ -253,8 +253,18 @@
     padding:28px 24px; margin-bottom:26px; box-shadow: var(--shadow);
     position:relative; border-top:2px solid var(--terracotta);
   }
-  .event-title{ font-family:var(--serif); font-size:1.25rem; color:var(--burgundy); text-align:center; margin-bottom:4px;}
+  /* Foto di atas kartu, dengan judul acara besar menumpuk di bagian bawah foto */
+  .event-photo{ position:relative; margin:-28px -24px 16px; aspect-ratio:4/5; max-height:440px; overflow:hidden;
+    border-radius:calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0; background:var(--sage); }
+  .event-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .event-photo::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 55%, rgba(38,33,26,.7) 100%); }
+  .event-title{ position:absolute; left:0; right:0; bottom:14px; z-index:1; font-family:var(--script); font-style:italic;
+    font-size:clamp(2.6rem,12vw,3.4rem); line-height:1; color:var(--paper); text-align:center; text-shadow:0 2px 14px rgba(0,0,0,.35); }
   .event-sub{ text-align:center; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dusty); margin-bottom:18px;}
+  /* Garis pemisah yang muncul berputar seperti kartu dibalik */
+  .flip-line{ width:70%; height:1px; margin:6px auto 16px; background:linear-gradient(to right, transparent, var(--terracotta) 20%, var(--terracotta) 80%, transparent); }
+  .js .reveal-flip{ transform:perspective(400px) rotateY(90deg); opacity:0; transition:transform .9s cubic-bezier(.22,.68,.32,1) .2s, opacity .6s ease .2s; }
+  .js .reveal-flip.in{ transform:none; opacity:1; }
   .event-row{ display:flex; gap:12px; font-size:.9rem; margin-bottom:10px; color:var(--ink); align-items:flex-start;}
   .event-row .ic{ color:var(--terracotta); flex-shrink:0; width:18px; text-align:center; }
   .map-frame{ display:block; width:100%; height:210px; border:0; border-radius:var(--radius); margin-top:14px; overflow:hidden;
@@ -371,7 +381,7 @@
   }
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior:auto; }
-    .js .reveal, .js .reveal-left, .js .reveal-right, .js .reveal-zoom{ opacity:1; transform:none; transition:none; }
+    .js .reveal, .js .reveal-left, .js .reveal-right, .js .reveal-zoom, .js .reveal-flip{ opacity:1; transform:none; transition:none; }
     #gate{ transition:opacity .3s; } #gate.opened{ transform:none; }
     .gate-anim{ animation:none; opacity:1; }
     .js #hero .hero-anim{ opacity:1; animation:none !important; }
@@ -506,9 +516,13 @@
   <div class="divider reveal"></div>
 
   <div class="event-card reveal-zoom" id="acara-gereja">
-    <div class="event-title">Pemberkatan Pernikahan</div>
+    <div class="event-photo">
+      <img class="fade-img" src="aset/foto/acara-gereja.webp" alt="Ratri dan Gallang" width="800" height="1000" loading="lazy" decoding="async">
+      <div class="event-title">Pemberkatan</div>
+    </div>
     <div class="event-sub">Sakramen Perkawinan Katolik</div>
     <div class="event-row"><span class="ic">📅</span><span>Minggu, 27 Desember 2026</span></div>
+    <div class="flip-line reveal-flip"></div>
     <div class="event-row"><span class="ic">🕑</span><span>Pukul 12.00 WIB – selesai</span></div>
     <div class="event-row"><span class="ic">📌</span><span>Gereja Katolik Salib Suci, Paroki Kamuning<br>Jl. Kemuning No. 25, Bandung 40113</span></div>
     <!-- Peta dimuat otomatis saat kartu mendekati layar -->
@@ -517,9 +531,13 @@
   </div>
 
   <div class="event-card reveal-zoom" id="acara-resepsi">
-    <div class="event-title">Resepsi Pernikahan</div>
+    <div class="event-photo">
+      <img class="fade-img" src="aset/foto/acara-resepsi.webp" alt="Ratri dan Gallang" width="800" height="1000" loading="lazy" decoding="async">
+      <div class="event-title">Resepsi</div>
+    </div>
     <div class="event-sub">Pesta Pernikahan</div>
     <div class="event-row"><span class="ic">📅</span><span>Minggu, 27 Desember 2026</span></div>
+    <div class="flip-line reveal-flip"></div>
     <div class="event-row"><span class="ic">🕑</span><span>Pukul 14.00 – 16.00 WIB</span></div>
     <div class="event-row"><span class="ic">📌</span><span>Selaras Guest House &amp; Restaurant<br>Jl. Taman Cibeunying Selatan No. 45, Cihapit, Bandung Wetan, Bandung 40114</span></div>
     <div class="map-frame" data-map="https://www.google.com/maps?q=-6.904762,107.623743&amp;z=17&amp;output=embed" data-title="Peta Selaras Guest House &amp; Restaurant"></div>
@@ -709,7 +727,7 @@
   });
 
   /* ============ MUNCUL SAAT DIGULIR + MUAT FOTO LATAR & PETA SAAT MENDEKATI LAYAR ============ */
-  var revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-zoom');
+  var revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-zoom, .reveal-flip');
   function loadMap(box){
     if (box.firstChild) return;
     var f = document.createElement('iframe');
