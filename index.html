@@ -226,7 +226,21 @@
   .couple-name{ font-family:var(--serif); font-size:1.4rem; color:var(--olive); }
   .couple-sub{ font-family:var(--script); font-style:italic; color:var(--terracotta); font-size:1.1rem; margin-bottom:8px;}
   .couple-parents{ font-size:.82rem; color:var(--taupe); line-height:1.6; }
-  .couple-social{ display:inline-block; margin-top:8px; font-size:.75rem; color:var(--burgundy); text-decoration:none; letter-spacing:.05em;}
+  .couple-social{ display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; margin-top:14px; border-radius:50%;
+    border:1px solid rgba(239,233,221,.55); color:var(--cream-soft); text-decoration:none; transition:background .2s, color .2s, transform .1s; }
+  .couple-social:hover, .couple-social:active{ background:var(--cream-soft); color:var(--olive); }
+  .couple-social:active{ transform:scale(.94); }
+
+  /* Bagian mempelai berlatar olive gelap */
+  #mempelai{ background:linear-gradient(180deg, #3F4F3A 0%, var(--olive) 45%, #44553F 100%); color:var(--cream-soft); max-width:none; }
+  #mempelai > *{ max-width:472px; margin-left:auto; margin-right:auto; }
+  #mempelai .eyebrow{ color:var(--cream); }
+  #mempelai .heading{ color:var(--paper); }
+  #mempelai .couple-photo{ box-shadow:0 20px 50px rgba(0,0,0,.25), 0 0 0 6px #3F4F3A, 0 0 0 7px var(--sage); }
+  #mempelai .couple-name{ color:var(--paper); }
+  #mempelai .couple-sub{ color:#E3A985; }
+  #mempelai .couple-parents{ color:var(--cream); }
+  #mempelai .amp-divider{ color:#E3A985; }
   .amp-divider{ text-align:center; font-family:var(--script); font-style:italic; font-size:1.6rem; color:var(--terracotta); margin: 6px 0 34px; }
 
   /* Foto muncul halus setelah selesai dimuat */
@@ -441,7 +455,7 @@
     <div class="couple-name">Elizabeth Ratri Dian Jati</div>
     <div class="couple-sub">Ratri</div>
     <div class="couple-parents">Putri dari<br>Bapak Antonius W. Topo Aji &amp; Ibu M.M. Lies Supriyantini</div>
-    <a class="couple-social" href="https://www.instagram.com/eratridianjati" target="_blank" rel="noopener">@eratridianjati</a>
+    <a class="couple-social" href="https://www.instagram.com/eratridianjati" target="_blank" rel="noopener" aria-label="Instagram Ratri (@eratridianjati)" title="@eratridianjati"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a>
   </div>
 
   <div class="amp-divider reveal">&amp;</div>
@@ -453,7 +467,7 @@
     <div class="couple-name">Gallang Purbowaseso</div>
     <div class="couple-sub">Gallang</div>
     <div class="couple-parents">Putra dari<br>Bapak Susamto Hadori &amp; Ibu Sri Marsiti</div>
-    <a class="couple-social" href="https://www.instagram.com/galankdana" target="_blank" rel="noopener">@galankdana</a>
+    <a class="couple-social" href="https://www.instagram.com/galankdana" target="_blank" rel="noopener" aria-label="Instagram Gallang (@galankdana)" title="@galankdana"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a>
   </div>
 </section>
 
