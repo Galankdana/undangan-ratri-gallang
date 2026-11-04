@@ -16,7 +16,7 @@
  */
 
 const SHEET_NAME = 'Ucapan';
-const CACHE_KEY  = 'wishes_v1';
+const CACHE_KEY  = 'wishes_v2';
 const CACHE_TTL  = 300;   // detik (5 menit); otomatis diperbarui setiap ada ucapan baru
 const MAX_LIST   = 80;    // jumlah ucapan terbaru yang dikirim ke undangan
 
@@ -25,7 +25,8 @@ const MAX_LIST   = 80;    // jumlah ucapan terbaru yang dikirim ke undangan
 function doGet(e) {
   const action = (e && e.parameter && e.parameter.action) || 'list';
   if (action === 'ping') return json_({ ok: true });
-  return json_({ ok: true, items: getList_() });
+  const data = getList_();
+  return json_({ ok: true, items: data.items, stats: data.stats });
 }
 
 function doPost(e) {
@@ -104,7 +105,13 @@ function getList_() {
   const sh = sheet_();
   const last = sh.getLastRow();
   let items = [];
+  const stats = { hadir: 0, tidak: 0 };
   if (last > 1) {
+    // Jumlah Hadir / Tidak Hadir dihitung dari seluruh baris (kolom C, D, G)
+    sh.getRange(2, 3, last - 1, 5).getValues().forEach(r => {
+      if (!r[0] || String(r[4]).toLowerCase() === 'sembunyi') return;
+      if (/tidak/i.test(String(r[1]))) stats.tidak++; else stats.hadir++;
+    });
     const n = Math.min(MAX_LIST * 2, last - 1);  // ambil lebih untuk mengimbangi yang disembunyikan
     const rows = sh.getRange(last - n + 1, 1, n, 7).getValues();
     items = rows
@@ -119,8 +126,9 @@ function getList_() {
       .reverse()
       .slice(0, MAX_LIST);
   }
-  try { cache.put(CACHE_KEY, JSON.stringify(items), CACHE_TTL); } catch (e) { /* melebihi 100 KB: lewati cache */ }
-  return items;
+  const data = { items: items, stats: stats };
+  try { cache.put(CACHE_KEY, JSON.stringify(data), CACHE_TTL); } catch (e) { /* melebihi 100 KB: lewati cache */ }
+  return data;
 }
 
 function sheet_() {
