@@ -137,6 +137,14 @@
   .btn-open:hover{ background:var(--cream-soft); color:var(--olive); }
   .btn-open:active, .btn-open.pressed{ background:var(--cream-soft); color:var(--olive); transform:scale(.96); transition:background .08s, color .08s, transform .08s; }
 
+  /* Penanda jenis undangan di sudut kanan atas (untuk penerima tamu di gereja):
+     emas = gereja + resepsi, perak = gereja saja, tanpa penanda = resepsi saja */
+  .tanda-sudut{ display:none; position:absolute; top:0; right:0; width:76px; height:76px; z-index:3; pointer-events:none;
+    clip-path:polygon(0 0, 100% 0, 100% 100%); }
+  .tanda-emas .tanda-sudut{ display:block; background:linear-gradient(225deg, #D8C08E 0%, #B08D52 55%, #9A7A44 100%); }
+  .tanda-perak .tanda-sudut{ display:block; background:linear-gradient(225deg, #D9DADC 0%, #B4B7BB 55%, #9A9DA2 100%); }
+  #hero .tanda-sudut{ position:absolute; }
+
   /* ============ SECTION UMUM ============ */
   section{ position:relative; z-index:2; padding: 90px 24px; max-width:520px; margin:0 auto; }
   .cv{ content-visibility:auto; contain-intrinsic-size:auto 800px; }
@@ -439,6 +447,7 @@
 
 <!-- ================= GERBANG / SAMPUL ================= -->
 <div id="gate" role="dialog" aria-label="Sampul undangan">
+  <div class="tanda-sudut" aria-hidden="true"></div>
   <div class="gate-inner">
    <div class="gate-top">
     <div class="gate-kicker gate-anim" style="--d:.2s">Undangan Pernikahan</div>
@@ -452,6 +461,9 @@
       (function(){
         try{
           var p = new URLSearchParams(location.search);
+          // Penanda sudut tampil seketika: emas = gereja + resepsi, perak = gereja saja
+          var j = (p.get('acara') || p.get('jenis') || 'lengkap').toLowerCase();
+          document.documentElement.classList.add(j === 'gereja' ? 'tanda-perak' : j === 'resepsi' ? 'tanda-none' : 'tanda-emas');
           var raw = p.get('to') || p.get('kepada');
           if(!raw) return;
           var n = raw.replace(/[-_+]+/g,' ').replace(/\s+/g,' ').trim().slice(0,60);
@@ -466,6 +478,7 @@
 
 <!-- ================= HERO ================= -->
 <section id="hero">
+  <div class="tanda-sudut" aria-hidden="true"></div>
   <div class="hero-slides" id="hero-slides" aria-hidden="true"></div>
   <div class="eyebrow hero-anim" style="--d:.2s">The Wedding of</div>
   <h1 class="hero-anim" style="--d:.4s">Ratri <span class="amp">&amp;</span> Gallang</h1>
@@ -733,6 +746,7 @@
   if (acara === 'gereja') $('acara-resepsi').hidden = true;
   else if (acara === 'resepsi') $('acara-gereja').hidden = true;
   else acara = 'lengkap';
+  document.documentElement.classList.add(acara === 'lengkap' ? 'tanda-emas' : acara === 'gereja' ? 'tanda-perak' : 'tanda-none');
 
   /* ============ BUKA GERBANG + MUSIK ============ */
   var audio = $('bg-music'), mBtn = $('music-toggle'), openBtn = $('btn-open'), gate = $('gate');
