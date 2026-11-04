@@ -786,7 +786,8 @@
   });
 
   /* ============ HITUNG MUNDUR (berhenti saat tab tidak aktif) ============ */
-  var target = new Date('2026-12-27T12:00:00+07:00').getTime(), timer = null;
+  // Tamu resepsi saja dihitung menuju pukul 14.00; tamu gereja dan undangan lengkap menuju pukul 12.00
+  var target = new Date(acara === 'resepsi' ? '2026-12-27T14:00:00+07:00' : '2026-12-27T12:00:00+07:00').getTime(), timer = null;
   var cd = ['cd-d','cd-h','cd-m','cd-s'].map($);
   function pad(n){ return String(n).padStart(2,'0'); }
   function tick(){
