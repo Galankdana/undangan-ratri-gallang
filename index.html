@@ -410,6 +410,7 @@
   @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(calc(-50% - 6px)); } }
   .foot-sign{ font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--cream); }
   footer .foot-names{ font-family:var(--script); font-style:italic; font-size:clamp(2.2rem,10vw,2.8rem); color:var(--paper); margin-top:8px !important; }
+  .nowrap{ white-space:nowrap; }
   footer small{ display:block; margin-top:40px !important; font-size:.68rem; color:var(--cream); opacity:.75; }
 
   @keyframes spin{ from{transform:rotate(0)} to{transform:rotate(360deg)} }
@@ -685,7 +686,7 @@
   </div>
   <div class="foot-sign reveal">Kami yang berbahagia,</div>
   <div class="foot-names reveal">Ratri &amp; Gallang</div>
-  <small>Undangan digital ini dibuat dengan penuh cinta oleh Ratri &amp; Gallang.</small>
+  <small>Undangan digital ini dibuat dengan penuh cinta oleh <span class="nowrap">Ratri &amp; Gallang</span>.</small>
 </footer>
 
 <!-- Tombol musik -->
