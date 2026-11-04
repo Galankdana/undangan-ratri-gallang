@@ -301,7 +301,12 @@
   #lightbox .prev{ left:10px; } #lightbox .next{ right:10px; }
 
   /* Dresscode */
-  .swatches{ display:flex; justify-content:center; gap:14px; margin-top:20px; flex-wrap:wrap;}
+  #dresscode{ padding-top:20px; }
+  .dress-card{ text-align:center; padding-top:34px; }
+  .dress-title{ font-family:var(--script); font-style:italic; font-size:clamp(2.6rem,12vw,3.4rem); line-height:1; color:var(--olive); margin-bottom:8px; }
+  .dress-text{ font-size:.88rem; color:var(--taupe); line-height:1.7; }
+  .dress-note{ margin-top:18px; font-size:.8rem; color:var(--burgundy); }
+  .swatches{ display:flex; justify-content:center; gap:14px; margin-top:4px; flex-wrap:wrap;}
   .swatch{ text-align:center; font-size:.65rem; color:var(--taupe); }
   .swatch span{ display:block; width:42px; height:42px; border-radius:50%; margin:0 auto 6px; border:1px solid rgba(0,0,0,.08); }
 
@@ -547,18 +552,19 @@
 
 <!-- ================= DRESSCODE ================= -->
 <section id="dresscode" class="cv">
-  <div class="eyebrow reveal">Dresscode</div>
-  <div class="heading reveal">Nuansa Warna Busana</div>
-  <div class="divider reveal"></div>
-  <p class="reveal" style="text-align:center; font-size:.85rem; color:var(--taupe); line-height:1.7;">
-    Kami akan sangat senang apabila Bapak/Ibu/Saudara/i berkenan mengenakan busana bernuansa warna berikut. Mohon menghindari busana berwarna putih.
-  </p>
-  <div class="swatches reveal">
-    <div class="swatch"><span style="background:var(--cream)"></span>Cream</div>
-    <div class="swatch"><span style="background:var(--sage)"></span>Sage</div>
-    <div class="swatch"><span style="background:var(--terracotta)"></span>Terracotta</div>
-    <div class="swatch"><span style="background:var(--olive)"></span>Olive</div>
-    <div class="swatch"><span style="background:var(--taupe)"></span>Taupe</div>
+  <div class="event-card dress-card reveal-zoom">
+    <div class="dress-title">Dresscode</div>
+    <div class="event-sub">Nuansa Warna Busana</div>
+    <p class="dress-text">Kami akan sangat senang apabila Bapak/Ibu/Saudara/i berkenan mengenakan busana bernuansa warna berikut.</p>
+    <div class="flip-line reveal-flip"></div>
+    <div class="swatches">
+      <div class="swatch reveal-zoom" style="transition-delay:.15s"><span style="background:var(--cream)"></span>Cream</div>
+      <div class="swatch reveal-zoom" style="transition-delay:.3s"><span style="background:var(--sage)"></span>Sage</div>
+      <div class="swatch reveal-zoom" style="transition-delay:.45s"><span style="background:var(--terracotta)"></span>Terracotta</div>
+      <div class="swatch reveal-zoom" style="transition-delay:.6s"><span style="background:var(--olive)"></span>Olive</div>
+      <div class="swatch reveal-zoom" style="transition-delay:.75s"><span style="background:var(--taupe)"></span>Taupe</div>
+    </div>
+    <p class="dress-note">Mohon menghindari busana berwarna putih.</p>
   </div>
 </section>
 
