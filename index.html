@@ -461,6 +461,9 @@
   }
   #hero > .hujan{ position:absolute; z-index:2; }
   footer > .hujan{ margin:0 !important; z-index:-1; }
+  #mempelai > .hujan{ position:absolute; z-index:0; max-width:none; margin:0; }
+  #ayat > .hujan{ z-index:0; }
+  #ayat blockquote{ position:relative; z-index:1; }
 
   /* Setangkai mawar di samping foto mempelai, berayun seperti tertiup angin */
   .foto-bunga{ position:relative; width:190px; margin:0 auto 18px; }
@@ -538,7 +541,6 @@
 <!-- ================= GERBANG / SAMPUL ================= -->
 <div id="gate" role="dialog" aria-label="Sampul undangan">
   <div class="tanda-sudut" aria-hidden="true"></div>
-  <div class="hujan" id="hujan-gerbang" data-kelopak="14" aria-hidden="true"></div>
   <div class="bunga-sudut kiri" aria-hidden="true"><span><img src="aset/hiasan/sudut.webp" alt="" width="540" height="539" decoding="async"></span></div>
   <div class="bunga-sudut kanan" aria-hidden="true"><span><img src="aset/hiasan/sudut.webp" alt="" width="540" height="539" decoding="async"></span></div>
   <div class="untaian" aria-hidden="true"><span><img src="aset/hiasan/untaian.webp" alt="" width="900" height="319" decoding="async"></span></div>
@@ -606,6 +608,7 @@
 
 <!-- ================= AYAT ================= -->
 <section id="ayat" class="reveal" data-bg="aset/foto/ayat.webp">
+  <div class="hujan" id="hujan-ayat" data-kelopak="8" aria-hidden="true"></div>
   <!-- Ornamen ranting daun (gambar orisinal, warna dari palet undangan) -->
   <svg class="sprig" viewBox="0 0 120 64" width="96" height="51" aria-hidden="true">
     <path d="M14 52 C 40 46, 62 34, 106 12" fill="none" stroke="#E4E1DB" stroke-width="1.4" stroke-linecap="round"/>
@@ -625,6 +628,7 @@
 
 <!-- ================= MEMPELAI ================= -->
 <section id="mempelai" class="section-orn cv">
+  <div class="hujan" id="hujan-mempelai" data-kelopak="12" aria-hidden="true"></div>
   <div class="eyebrow reveal">Mempelai</div>
   <div class="heading reveal">Dengan penuh syukur kepada Tuhan Yang Maha Esa, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami.</div>
   <div class="divider reveal"></div>
@@ -889,7 +893,6 @@
       startSlides();
       setTimeout(function(){ $('hero').classList.add('go'); $('panel').classList.add('go'); }, 500);
       mulaiHujan();
-      setTimeout(function(){ var h = $('hujan-gerbang'); if (h) h.innerHTML = ''; }, 1700);
     });
   });
 
@@ -912,9 +915,14 @@
     }
     if (pengamatHujan) pengamatHujan.observe(box);
   }
-  hujan($('hujan-gerbang'));
+  var pemicuHujan = 'IntersectionObserver' in window ? new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if (en.isIntersecting){ pemicuHujan.unobserve(en.target); hujan(en.target); } });
+  }, { rootMargin:'200px 0px' }) : null;
   function mulaiHujan(){
-    hujan($('hujan-hero')); hujan($('hujan-penutup'));
+    ['hujan-hero','hujan-ayat','hujan-mempelai','hujan-penutup'].forEach(function(id){
+      var box = $(id); if (!box) return;
+      if (pemicuHujan) pemicuHujan.observe(box); else hujan(box);
+    });
     if (layarLebar.matches) hujan($('hujan-panel'));
   }
   if (layarLebar.addEventListener) layarLebar.addEventListener('change', function(e){ if (e.matches && opened) hujan($('hujan-panel')); });
