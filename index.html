@@ -1088,7 +1088,7 @@
   /* =========================================================
      RSVP & UCAPAN — tampil seketika dan antidobel
      ========================================================= */
-  var CACHE_KEY = 'rg_wishes_v2';
+  var CACHE_KEY = 'rg_wishes_v3';   // v3: buang simpanan lama di setiap perangkat
   var list = $('wish-list'), form = $('rsvp-form'), btn = $('btn-submit'), msgEl = $('form-msg');
   var cached = store.get(CACHE_KEY) || {};
   var wishes = cached.items || [], stats = cached.stats || null;
@@ -1145,17 +1145,30 @@
     var ids = {}; serverItems.forEach(function(w){ ids[w.id] = 1; });
     wishes = wishes.filter(function(w){ return w.status && !ids[w.id]; }).concat(serverItems);
   }
-  function loadWishes(){
+  var lastLoad = 0, loading = false;
+  function loadWishes(coba){
     if (!C.ENDPOINT){ loadedOnce = true; render(); return; }
-    fetchT(C.ENDPOINT + '?action=list', {}, 15000)
+    if (loading) return;
+    loading = true; lastLoad = Date.now(); coba = coba || 0;
+    // _= : penanda waktu agar peramban (terutama Safari di iPhone) tidak memakai jawaban lama dari cache
+    fetchT(C.ENDPOINT + '?action=list&_=' + Date.now(), { cache:'no-store' }, 15000)
       .then(function(r){ return r.json(); })
       .then(function(d){
-        loadedOnce = true;
+        loading = false; loadedOnce = true;
         if (d && d.ok){ merge(d.items || []); stats = d.stats || null; saveCache(); }
         render();
       })
-      .catch(function(){ loadedOnce = true; render(); });
+      .catch(function(){
+        loading = false; loadedOnce = true; render();
+        if (coba < 2) setTimeout(function(){ loadWishes(coba + 1); }, 4000 * (coba + 1));   // coba lagi bila jaringan/Apps Script lambat
+      });
   }
+  // Segarkan daftar saat tab dibuka kembali. iPhone sering memulihkan tab lama tanpa memuat ulang halaman,
+  // sehingga ucapan yang tampil bisa tertinggal beberapa hari.
+  function segarkan(){ if (Date.now() - lastLoad > 20000) loadWishes(); }
+  document.addEventListener('visibilitychange', function(){ if (document.visibilityState === 'visible') segarkan(); });
+  window.addEventListener('pageshow', function(e){ if (e.persisted) segarkan(); });
+  window.addEventListener('focus', segarkan);
   // Tampilkan ucapan tersimpan seketika, lalu segarkan dari server di latar belakang.
   // Permintaan ini sekaligus "membangunkan" Apps Script sebelum tamu menekan Kirim.
   if (wishes.length) render();
