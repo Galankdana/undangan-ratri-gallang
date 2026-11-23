@@ -112,6 +112,23 @@
     will-change: transform, opacity;
   }
   #gate.opened{ transform: translateY(-100%); opacity:0; pointer-events:none; }
+  .gate-latar, .gate-foto{ display:none; }
+  /* Layar lebar: foto sampul tidak lagi direntangkan selebar layar (pecah dan terpotong).
+     Foto tajam tampil utuh sebagai kolom potret di tengah, sisi kiri-kanan diisi versi buram dari foto yang sama. */
+  @media (min-width:900px) and (min-aspect-ratio:1/1){
+    #gate{ background:#1C1C1C; }
+    .gate-latar, .gate-foto{ display:block; position:absolute; top:0; bottom:0; pointer-events:none; }
+    .gate-latar{ left:0; right:0; background:url("aset/foto/sampul.webp") center 40%/cover no-repeat;
+      filter:blur(28px) brightness(.5) saturate(.9); transform:scale(1.12); }
+    .gate-foto{ left:50%; width:min(66.8vh, 100vw); transform:translateX(-50%);
+      background:
+        linear-gradient(180deg, rgba(20,20,20,.78) 0%, rgba(20,20,20,.40) 24%, rgba(20,20,20,.06) 42%, rgba(20,20,20,.10) 62%, rgba(20,20,20,.80) 100%),
+        url("aset/foto/sampul-hd.webp") center top/cover no-repeat;
+      box-shadow:0 0 60px rgba(0,0,0,.45); }
+    .gate-foto::before, .gate-foto::after{ content:""; position:absolute; top:0; bottom:0; width:1px; background:rgba(216,192,142,.45); }
+    .gate-foto::before{ left:0; } .gate-foto::after{ right:0; }
+    #gate::before{ z-index:1; }
+  }
   #gate::before{
     content:""; position:absolute; inset:14px; border:1px solid rgba(241,240,238,.45); pointer-events:none;
   }
@@ -540,6 +557,7 @@
 
 <!-- ================= GERBANG / SAMPUL ================= -->
 <div id="gate" role="dialog" aria-label="Sampul undangan">
+  <div class="gate-latar" aria-hidden="true"></div><div class="gate-foto" aria-hidden="true"></div>
   <div class="tanda-sudut" aria-hidden="true"></div>
   <div class="bunga-sudut kiri" aria-hidden="true"><span><img src="aset/hiasan/sudut.webp" alt="" width="540" height="539" decoding="async"></span></div>
   <div class="bunga-sudut kanan" aria-hidden="true"><span><img src="aset/hiasan/sudut.webp" alt="" width="540" height="539" decoding="async"></span></div>
